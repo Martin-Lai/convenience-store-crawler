@@ -18,21 +18,23 @@ class Seveneleven(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
+        self.log("======")
+        self.log(response)
         self._citys=self.get_citys(response)
         self.log("--------------")
         self.log("列出含有7-11所有縣市:{}".format(self._citys))
         headers={'Referer':'https://emap.pcsc.com.tw/emap.aspx','Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
 
-        for city in self._citys:
-            city_code=list(city.values())[0]
-            city_name=list(city.keys())[0]
-            #self.log(city_code) #unpack dict values
+        # for city in self._citys:
+        #     city_code=list(city.values())[0]
+        #     city_name=list(city.keys())[0]
+        #     #self.log(city_code) #unpack dict values
 
-            url="https://emap.pcsc.com.tw/EMapSDK.aspx"
-            yield scrapy.Request(url=url, method='POST',
-                          body="commandid=GetTown&cityid={}&leftMenuChecked=".format(city_code),meta={'city_name':city_name},headers=headers,callback=self.get_dists_of_city)
-            if self.DEBUG==1:
-               return None
+        #     url="https://emap.pcsc.com.tw/EMapSDK.aspx"
+        #     yield scrapy.Request(url=url, method='POST',
+        #                   body="commandid=GetTown&cityid={}&leftMenuChecked=".format(city_code),meta={'city_name':city_name},headers=headers,callback=self.get_dists_of_city)
+        #     if self.DEBUG==1:
+        #        return None
 
 
     def get_dists_of_city(self,response):

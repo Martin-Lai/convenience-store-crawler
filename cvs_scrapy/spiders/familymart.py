@@ -21,7 +21,7 @@ class Familymart(scrapy.Spider):
         self.log("--------------")
         self.log("列出所有縣市:{}".format(self._citys))
         headers={'Referer':'https://www.family.com.tw/marketing/inquiry.aspx'}
-        for city in self._citys:
+        for city in ['宜蘭縣', '花蓮縣', '台東縣', '基隆市', '台北市', '新北市', '桃園市', '新竹市', '新竹縣', '苗栗縣', '雲林縣', '嘉義市', '嘉義縣', '台南市', '高雄市', '屏東縣', '澎湖縣', '金門縣', '連江縣', '台中市', '彰化縣', '南投縣']:
             self.log(city)
             url="https://api.map.com.tw/net/familyShop.aspx?searchType=ShopList&type=&city={}&area=&road=&fun=showStoreList&key=6F30E8BF706D653965BDE302661D1241F8BE9EBC".format(city)
             yield scrapy.Request(url=url, headers=headers,callback=self.get_shop_of_citys)
